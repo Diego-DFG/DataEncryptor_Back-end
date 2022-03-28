@@ -7,13 +7,15 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
 const url_dev = 'http://127.0.0.1:5500';
+const url_prod = "https://diego-dfg.github.io";
+
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({extended: true}));
-app.use(cors({credentials: true, origin: url_dev}));
+app.use(cors({credentials: true, origin: url_prod}));
 app.use('/', rotas);
 
 conexao.connect((erro)=> {

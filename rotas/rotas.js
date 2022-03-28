@@ -9,6 +9,9 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 //const jwt = require('jwt');
 
+const url_prod = "https://diego-dfg.github.io";
+const url_auth_dev = "http://127.0.0.1:5500";
+
 const arrayUsuarioAutenticado = [];
 
 passport.use(new LocalStrategy(
@@ -59,7 +62,7 @@ function verificaToken(req, res, next) {
  next();
   }
 
-  rotas.post("/auth", passport.authenticate('local', {session: false}), async (req, res) => {
+rotas.post("/auth", passport.authenticate('local', {session: false}), async (req, res) => {
     console.log('Acessei a rota Auth');
       const usuarioAutenticado = arrayUsuarioAutenticado[0];
       const payload = {id: usuarioAutenticado.id};
@@ -68,7 +71,7 @@ function verificaToken(req, res, next) {
 
       console.log(token);
   
-      res.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:5500")
+      res.setHeader("Access-Control-Allow-Origin", url_prod)
       res.cookie("userToken", token, options);
       res.sendStatus(204);
 });
@@ -81,6 +84,7 @@ rotas.delete("/logout", async (req, res) => {
 });
 
 rotas.get('/', verificaToken, async (req, res)=> {
+  res.setHeader("Access-Control-Allow-Origin",url_prod);
     await DadosEncriptados.recuperaDados(res);
 });
     
