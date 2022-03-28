@@ -50,7 +50,7 @@ passport.use(new LocalStrategy(
 
 function verificaToken(req, res, next) {
     
-    const tokenVerificado = req.cookies.userToken;
+  const tokenVerificado = req.cookies.userToken;
   console.log(req.cookies);
   console.log(tokenVerificado);
   if(!tokenVerificado) {
